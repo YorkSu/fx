@@ -1,0 +1,14 @@
+{
+    "meta": {
+        "author": "York Su",
+        "version": "0.1.1",
+        "codename": "Fox",
+        "project_date": "2020-09-04"
+    },
+    "shell": {
+        "hello": "Welcome to Use FX\nEnjoy it!"
+    },
+    "scripts": {
+
+    }
+}

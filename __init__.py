@@ -8,6 +8,12 @@ useful python scripts
 
 __author__ = "York Su"
 __version__ = "0.1.0"
-__codename__ = "Fox"
-__project_date__ = "2020-09-04"
+
+
+import os as _os
+
+ROOT_PATH = _os.path.dirname(_os.path.abspath(__file__))
+CONF_PATH = _os.path.join(ROOT_PATH, 'conf.json')
+
+del _os
 

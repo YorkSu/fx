@@ -6,7 +6,7 @@ Shell的关键类
 """
 
 
-# from fx.core.flag import flags as F
+from fx.core.config import config
 from fx.shell.parse import Parser
 from fx.shell.parse import and_parser
 from fx.shell.parse import command_parser
@@ -20,6 +20,11 @@ class Shell(Parser):
 
     这是一个单例类
     """
+    def __init__(self):
+        # config = json.load(open(CONF_PATH))
+        conf = config.root()
+        self.hello = conf['shell']['hello']
+
     def parse(self, expression: str) -> None:
         expressions = and_parser.parse(expression)
         for expression in expressions:
@@ -36,6 +41,7 @@ class Shell(Parser):
             print(response.message)
 
     def start(self):
+        print(self.hello)
         while True:
             expression = input("==> ")
             self.parse(expression)
