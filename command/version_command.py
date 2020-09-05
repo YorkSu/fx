@@ -6,7 +6,7 @@ VERSION命令的实现类
 """
 
 
-from fx.core.command import Command
+from fx.command import Command
 from fx.core.config import config
 from fx.core.response import Response
 
@@ -30,14 +30,15 @@ class VersionCommand(Command):
             if arg in ['more', '+']:
                 count = '2'
         if 'count' in kwargs:
-            count = kwargs.pop('count')
+            count = str(kwargs.pop('count'))
 
-        if not count.isdigit() or int(count) < 1:
-            response.message = f"Version: Invalid count: {count}"
-        elif int(count) == 1:
+        if count == '1':
             response.message = f"FX {version}"
+        elif count.isdigit() and int(count) > 1:
+            response.message = f"FX {version} [{codename} {project_date}]"
         else:
-            response.message = f"FX {version}"\
-                f" [{codename} {project_date}]"
+            response.code = 417
+            response.message = f"Version: Invalid count: {count}"
+
         return response
 

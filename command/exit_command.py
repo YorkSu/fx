@@ -8,7 +8,7 @@ EXIT命令的实现类
 
 import os
 
-from fx.core.command import Command
+from fx.command import Command
 
 
 class ExitCommand(Command):

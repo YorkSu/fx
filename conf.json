@@ -9,6 +9,9 @@
         "hello": "Welcome to Use FX\nEnjoy it!"
     },
     "scripts": {
-
+        "time": {
+            "location": "time_",
+            "command": "TIME"
+        }
     }
 }

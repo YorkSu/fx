@@ -10,8 +10,9 @@ import abc
 from typing import Sequence, Optional, Tuple
 
 from fx.core.pattern import AbstractSingleton
-from fx.core.command import Command
-from fx.core.command.command_enum import CommandEnum
+from fx.command import Command
+# from fx.command.command_enum import CommandEnum
+from fx.command.command_enum import CommandEnumHandler
 
 
 class Parser(AbstractSingleton):
@@ -49,7 +50,10 @@ class CommandParser(Parser):
         expression = expression.strip()
         command = expression.split(' ', 1)[0]
         command = command.upper()
-        return CommandEnum.get(command)
+        command_enum = CommandEnumHandler.get_enum(command)
+        if command_enum is None:
+            return None
+        return command_enum.value
 
     def name(self, expression: str) -> str:
         expression = expression.strip()
@@ -96,11 +100,6 @@ argument_parser = ArgumentParser()
 
 
 if __name__ == "__main__":
-    # print("EXIT" in CommandEnum)
-    # print(dict(CommandEnum.__members__.items()))
-    # print("EXIT" in CommandEnum.__members__.keys())
-    # print(CommandEnum.contains("EXIT"))
-    # print(CommandParser().parse("EXIT"))
     response = CommandParser().parse("Version").execute(count=0)
     print(response.message)
 

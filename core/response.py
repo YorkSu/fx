@@ -6,9 +6,9 @@ Response Class
 """
 
 
-class Response(object):
+class Response:
     def __init__(self):
-        self.code = 0
+        self.code = 200
 
     def get(self, key):
         """Get value from specified key"""
