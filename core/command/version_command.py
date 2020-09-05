@@ -6,8 +6,8 @@ VERSION命令的实现类
 """
 
 
-from fx import __version__, __codename__, __project_date__
 from fx.core.command import Command
+from fx.core.config import config
 from fx.core.response import Response
 
 
@@ -19,20 +19,25 @@ class VersionCommand(Command):
     fx的内置命令
     """
     def execute(self, *args, **kwargs) -> None:
+        conf = config.root()
+        version = conf['meta']['version']
+        codename = conf['meta']['codename']
+        project_date = conf['meta']['project_date']
         response = Response()
-        count = 1
+        
+        count = '1'
         for arg in args:
             if arg in ['more', '+']:
-                count = 2
+                count = '2'
         if 'count' in kwargs:
-            count = int(kwargs.pop('count'))
-        
-        if count < 1:
+            count = kwargs.pop('count')
+
+        if not count.isdigit() or int(count) < 1:
             response.message = f"Version: Invalid count: {count}"
-        elif count == 1:
-            response.message = f"FX {__version__}"
+        elif int(count) == 1:
+            response.message = f"FX {version}"
         else:
-            response.message = f"FX {__version__}"\
-                f" [{__codename__} {__project_date__}]"
+            response.message = f"FX {version}"\
+                f" [{codename} {project_date}]"
         return response
 
