@@ -6,48 +6,82 @@ Command枚举类
 """
 
 
-from enum import Enum
-from typing import Optional
+from typing import Optional, Callable
 
 from fx.command import Command
 from fx.command.exit_command import ExitCommand
 from fx.command.version_command import VersionCommand
 from fx.core.config import config
+from fx.core.pattern import Singleton
+from fx.core.loader import loader
 
 
-class CommandEnum(Enum):
+class CommandEnum(Singleton):
     """Command Enum
 
-    这是一个枚举类，包含命令的枚举
+    命令的枚举类
+
+    这是一个单例类
     """
-    EXIT = ExitCommand()
-    VERSION = VersionCommand()
-
-    @classmethod
-    def contains(cls, expression: str) -> bool:
-        return expression in cls.__members__.keys()
-
-    @classmethod
-    def get(cls, expression: str) -> Optional[Command]:
-        target = cls.__members__.get(expression, None)
-        if target is None:
-            return target
-        return target.value
-
-
-class CommandEnumHandler:
     def __init__(self):
+        self._members = {
+            "EXIT": ExitCommand,
+            "VERSION": VersionCommand,
+        }
         conf = config.root()
         scripts = conf.get('scripts')
-        for script in scripts:
-            pass
+        for _, v in scripts.items():
+            imp_name = '.'.join([
+                conf.get('meta').get('name'),
+                'scripts',
+                v.get('location'),
+                v.get('entrance'),
+            ])
+            script_load_function = self.script(
+                imp_name,
+                v.get('class_name'),
+            )
+            self._members[v.get('command')] = script_load_function
 
-    @classmethod
-    def contains(cls, expression: str) -> bool:
-        return expression in CommandEnum.__members__.keys()
+    @property
+    def members(self):
+        return self._members
 
-    @classmethod
-    def get_enum(cls, expression: str) -> Enum:
-        target = CommandEnum.__members__.get(expression, None)
-        return target
+    def script(self,
+            name: str,
+            cls_name: str,
+            default=None
+        ) -> Callable:
+        def module() -> Optional[Command]:
+            _module = loader.lazy_import(name)
+            if _module is None:
+                return None
+            return getattr(_module, cls_name, default)()
+        return module
+
+    def contains(self, expression: str) -> bool:
+        return expression in self._members
+    
+    def get(self, expression: str) -> Optional[Command]:
+        pre_output = self._members.get(expression, None)
+        if callable(pre_output):
+            pre_output = pre_output()
+        return pre_output
+
+
+command_enum = CommandEnum()
+
+
+if __name__ == "__main__":
+    pass
+    # print(command_enum.members)
+    # print(command_enum.get("TIME"))
+    # print(command_enum.get("TIME"))
+
+    # c = command_enum.script('fx.scripts.time_.main', 'TimeCommand')()
+    # print(c)
+    # import fx.scripts.time_.main as m
+
+    # cmd = getattr(m, 'TimeCommand', None)
+    # print(cmd)
 

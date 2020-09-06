@@ -7,12 +7,13 @@ Parser接口及其部分实现类
 
 
 import abc
+import argparse
+import re
 from typing import Sequence, Optional, Tuple
 
 from fx.core.pattern import AbstractSingleton
 from fx.command import Command
-# from fx.command.command_enum import CommandEnum
-from fx.command.command_enum import CommandEnumHandler
+from fx.command.command_enum import command_enum
 
 
 class Parser(AbstractSingleton):
@@ -50,10 +51,7 @@ class CommandParser(Parser):
         expression = expression.strip()
         command = expression.split(' ', 1)[0]
         command = command.upper()
-        command_enum = CommandEnumHandler.get_enum(command)
-        if command_enum is None:
-            return None
-        return command_enum.value
+        return command_enum.get(command)
 
     def name(self, expression: str) -> str:
         expression = expression.strip()
@@ -68,30 +66,31 @@ class ArgumentParser(Parser):
     
     这是一个单例类
     """
-    def parse(self, expression: str) -> Tuple[list, dict, list]:
+    def __init__(self):
+        self.parser = argparse.ArgumentParser()
+
+
+    def parse(self, expression: str) -> Tuple[list, dict]:
         expression = expression.strip()
-        argument_e = expression.split(' ', 1)[-1]
-        elements = argument_e.split(' ')
-        # 移除空元素
-        for i in ['', ' ']:
-            if i in elements:
-                elements.remove(i)
+        expressions = expression.split(' ', 1)
+        if len(expressions) == 1:
+            return [], {}
+        argument = expressions[-1]
+        argv = re.findall(r'[\w=]*\"[^\"]+\"|[\w=]+', argument)
 
         args = []
         kwargs = {}
-        error = []
 
-        for element in elements:
-            if '=' in element:  # 关键字参数
-                kwarg = element.split('=')
-                if len(kwarg) == 2:
-                    kwargs[kwarg[0]] = kwarg[1]
-                else:  # 两个或以上等号
-                    error.append(element)
-            else:  # 位置参数
-                args.append(element)
-        
-        return args, kwargs, error
+        for item in argv:
+            if '=' in item:
+                element = item.split('=', 1)
+                k = element[0]
+                v = re.sub(r'\"', '', element[1])
+                kwargs[k] = v
+            else:
+                args.append(re.sub(r'\"', '', item))
+
+        return args, kwargs
 
 
 and_parser = AndParser()

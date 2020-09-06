@@ -21,7 +21,6 @@ class Shell(Parser):
     这是一个单例类
     """
     def __init__(self):
-        # config = json.load(open(CONF_PATH))
         conf = config.root()
         self.hello = conf['shell']['hello']
 
@@ -29,14 +28,11 @@ class Shell(Parser):
         expressions = and_parser.parse(expression)
         for expression in expressions:
             command = command_parser.parse(expression)
-            args, kwargs, error = argument_parser.parse(expression)
+            args, kwargs = argument_parser.parse(expression)
             if command is None:
                 print("Invalid Command: "
                      f"{command_parser.name(expression)}")
                 continue
-            if error:
-                for e in error:
-                    print(f"Invalid Argument: {e}")
             response = command.execute(*args, **kwargs)
             print(response.message)
 
