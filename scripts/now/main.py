@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Main
 
-The TIME script Command Class
+NOW 脚本的入口文件
 """
 
 
