@@ -18,7 +18,7 @@ class VersionCommand(Command):
 
     fx的内置命令
     """
-    def execute(self, *args, **kwargs) -> None:
+    def execute(self, *args, **kwargs) -> Response:
         conf = config.root()
         version = conf['meta']['version']
         codename = conf['meta']['codename']
