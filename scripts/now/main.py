@@ -11,10 +11,10 @@ from fx.command import Command
 from fx.core.response import Response
 
 
-class TimeCommand(Command):
-    """Time Command
+class NowCommand(Command):
+    """Now Command
     
-    TIME 脚本的实现类
+    NOW 脚本的实现类
     """
     def __init__(self):
         self.fmt_map = {
@@ -61,7 +61,7 @@ class TimeCommand(Command):
 
 
 if __name__ == "__main__":
-    tc = TimeCommand()
+    tc = NowCommand()
     inp = input('==> ')
     # res = tc.execute(inp)
     res = tc.execute(fmt=inp)

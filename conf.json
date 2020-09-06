@@ -10,11 +10,11 @@
         "hello": "Welcome to Use FX\nEnjoy it!"
     },
     "scripts": {
-        "time": {
-            "location": "time_",
+        "now": {
+            "location": "now",
             "entrance": "main",
-            "class_name": "TimeCommand",
-            "command": "TIME"
+            "class_name": "NowCommand",
+            "command": "NOW"
         }
     }
 }
