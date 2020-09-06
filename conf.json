@@ -1,5 +1,6 @@
 {
     "meta": {
+        "name": "fx",
         "author": "York Su",
         "version": "0.1.1",
         "codename": "Fox",
@@ -11,6 +12,8 @@
     "scripts": {
         "time": {
             "location": "time_",
+            "entrance": "main",
+            "class_name": "TimeCommand",
             "command": "TIME"
         }
     }
