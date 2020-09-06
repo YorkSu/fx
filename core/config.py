@@ -18,9 +18,11 @@ class Config(Singleton):
 
     配置的管理类
     """
+    ROOT_PATH = ROOT_PATH
+    CONF_PATH = CONF_PATH
+
     def root(self):
-        config = json.load(open(CONF_PATH))
-        return config
+        return json.load(open(CONF_PATH))
 
     def load(self, script: str) -> dict:
         script_path = os.path.join(
@@ -30,11 +32,11 @@ class Config(Singleton):
             'conf.json'
         )
         try:
-            config = json.load(open(script_path))
+            conf = json.load(open(script_path))
         except Exception as e:
             print(e)
-            config = {}
-        return config
+            conf = {}
+        return conf
 
 
 config = Config()
