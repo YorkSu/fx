@@ -15,6 +15,12 @@
             "entrance": "main",
             "class_name": "NowCommand",
             "command": "NOW"
+        },
+        "clock": {
+            "location": "clock",
+            "entrance": "main",
+            "class_name": "ClockCommand",
+            "command": "CLOCK"
         }
     }
 }

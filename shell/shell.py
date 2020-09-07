@@ -34,7 +34,8 @@ class Shell(Parser):
                      f"{command_parser.name(expression)}")
                 continue
             response = command.execute(*args, **kwargs)
-            print(response.message)
+            if response.message:
+                print(response.message)
 
     def start(self):
         print(self.hello)

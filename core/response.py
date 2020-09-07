@@ -9,6 +9,7 @@ Response Class
 class Response:
     def __init__(self):
         self.code = 200
+        self.message = ''
 
     def get(self, key):
         """Get value from specified key"""
