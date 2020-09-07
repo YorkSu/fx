@@ -10,6 +10,12 @@
         "hello": "Welcome to Use FX\nEnjoy it!"
     },
     "scripts": {
+        "helloworld": {
+            "location": "helloworld",
+            "entrance": "main",
+            "class_name": "HelloworldCommand",
+            "command": "HELLOWORLD"
+        },
         "now": {
             "location": "now",
             "entrance": "main",
