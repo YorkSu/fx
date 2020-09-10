@@ -27,6 +27,12 @@
             "entrance": "main",
             "class_name": "ClockCommand",
             "command": "CLOCK"
+        }, 
+        "keepssh": {
+            "location": "keepssh",
+            "entrance": "main",
+            "class_name": "KeepSSHCommand",
+            "command": "KEEPSSH"
         }
     }
 }

@@ -25,6 +25,10 @@ class Config(Singleton):
         return json.load(open(CONF_PATH))
 
     def load(self, script: str) -> dict:
+        """Title
+
+        Description
+        """
         script_path = os.path.join(
             ROOT_PATH,
             'scripts',
