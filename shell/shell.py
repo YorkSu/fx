@@ -6,7 +6,10 @@ Shell的关键类
 """
 
 
+from typing import Sequence
+
 from fx.core.config import config
+from fx.core.response import Response
 from fx.shell.parse import Parser
 from fx.shell.parse import and_parser
 from fx.shell.parse import command_parser
@@ -24,8 +27,9 @@ class Shell(Parser):
         conf = config.root()
         self.hello = conf['shell']['hello']
 
-    def parse(self, expression: str) -> None:
+    def response(self, expression: str) -> Sequence[Response]:
         expressions = and_parser.parse(expression)
+        responses = []
         for expression in expressions:
             command = command_parser.parse(expression)
             args, kwargs = argument_parser.parse(expression)
@@ -34,6 +38,12 @@ class Shell(Parser):
                      f"{command_parser.name(expression)}")
                 continue
             response = command.execute(*args, **kwargs)
+            responses.append(response)
+        return responses
+
+    def parse(self, expression: str) -> None:
+        responses = self.response(expression)
+        for response in responses:
             if response.message:
                 print(response.message)
 
