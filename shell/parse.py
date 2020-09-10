@@ -76,7 +76,7 @@ class ArgumentParser(Parser):
         if len(expressions) == 1:
             return [], {}
         argument = expressions[-1]
-        argv = re.findall(r'[\w=]*\"[^\"]+\"|[\w=]+', argument)
+        argv = re.findall(r'.*\"[^\"]+\"|.+', argument)
 
         args = []
         kwargs = {}
