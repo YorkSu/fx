@@ -29,8 +29,8 @@ class VersionCommand(Command):
         for arg in args:
             if arg in ['more', '+']:
                 count = '2'
-        if 'count' in kwargs:
-            count = str(kwargs.pop('count'))
+
+        count = str(kwargs.get('count', count))
 
         if count == '1':
             response.message = f"FX {version}"
