@@ -59,7 +59,7 @@ class CmdParser(Parser):
         if F.expression:
             Shell().parse(F.expression)
         elif self.args.version:
-            Shell().parse(f"VERSION count={self.args.version} & exit")
+            Shell().parse(f"VERSION count={self.args.version} & EXIT")
         else:
             Shell().start()
 

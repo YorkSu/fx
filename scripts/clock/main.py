@@ -23,7 +23,6 @@ class ClockCommand(Command):
     }
 
     def execute(self, *args, **kwargs) -> Response:
-        response = Response()
         mode = "S"
         is_cls = True
         mute = False
@@ -62,9 +61,9 @@ class ClockCommand(Command):
         except KeyboardInterrupt:
             print('')
             if not mute:
-                print('Got Ctrl-C')
+                print('脚本终止')
 
-        return response
+        return Response()
 
 
 if __name__ == "__main__":
