@@ -6,9 +6,11 @@ EXIT命令的实现类
 """
 
 
-import os
+# import os
 
 from fx.command import Command
+from fx.core.flag import flags as F
+from fx.core.response import Response
 
 
 class ExitCommand(Command):
@@ -18,6 +20,7 @@ class ExitCommand(Command):
 
     fx的内置命令
     """
-    def execute(self, *args, **kwargs) -> None:
-        os._exit(0)
+    def execute(self, *args, **kwargs) -> Response:
+        F.exit = True
+        return Response()
 

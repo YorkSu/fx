@@ -9,6 +9,7 @@ Shell的关键类
 from typing import Sequence
 
 from fx.core.config import config
+from fx.core.flag import flags as F
 from fx.core.response import Response
 from fx.shell.parse import Parser
 from fx.shell.parse import and_parser
@@ -48,8 +49,9 @@ class Shell(Parser):
                 print(response.message)
 
     def start(self):
+        F.exit = False
         print(self.hello)
-        while True:
+        while not F.exit:
             expression = input("==> ")
             self.parse(expression)
 
