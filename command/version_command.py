@@ -35,9 +35,9 @@ class VersionCommand(Command):
         count = str(kwargs.get('count', count))
 
         if count == '1':
-            response.message = f"FX {version} C{commits}"
+            response.message = f"FX {version}-{commits}"
         elif count.isdigit() and int(count) > 1:
-            response.message = f"FX {version} C{commits}"
+            response.message = f"FX {version}-{commits}"
             response.message += f" [{codename} {project_date}]"
             response.message += f" [Latest {latest}]"
         else:

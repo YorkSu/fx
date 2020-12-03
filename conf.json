@@ -2,10 +2,10 @@
     "meta": {
         "name": "fx",
         "author": "York Su",
-        "version": "0.1.1",
+        "version": "0.1.2",
         "codename": "Fox",
         "project_date": "2020-09-04",
-        "commits": 24,
+        "commits": 26,
         "latest": "2020-12-03"
     },
     "shell": {
