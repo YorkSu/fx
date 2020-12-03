@@ -7,6 +7,7 @@ Parser接口及其部分实现类
 
 
 import argparse
+import os
 
 from fx.core.flag import flags as F
 from fx.shell.parse import Parser
@@ -38,6 +39,12 @@ class CmdParser(Parser):
             help="表达式",
         )
         self.group.add_argument(
+            '-c',
+            '--clean',
+            action='count',
+            help="启动FX的同时清空打印台",
+        )
+        self.group.add_argument(
             '-V',
             '--version',
             action="count",
@@ -56,10 +63,15 @@ class CmdParser(Parser):
         """解析接收到的命令行输入"""
         F.set("expression", ' '.join(self.args.expression))
         F.set("yes", self.args.yes)
+        F.set("clean", self.args.clean)
+        if self.args.clean:
+            os.system("cls")
         if F.expression:
             Shell().parse(F.expression)
         elif self.args.version:
             Shell().parse(f"VERSION count={self.args.version} & EXIT")
         else:
             Shell().start()
+        if isinstance(self.args.clean, int) and self.args.clean > 1:
+            os.system("cls")
 
