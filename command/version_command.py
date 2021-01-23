@@ -44,5 +44,7 @@ class VersionCommand(Command):
             response.code = 417
             response.message = f"Version: Invalid count: {count}"
 
+        if response.message:
+            print(response.message)
         return response
 
