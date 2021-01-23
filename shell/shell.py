@@ -6,11 +6,8 @@ Shell的关键类
 """
 
 
-from typing import Sequence
-
 from fx.core.config import config
 from fx.core.flag import flags as F
-from fx.core.response import Response
 from fx.shell.parse import Parser
 from fx.shell.parse import and_parser
 from fx.shell.parse import command_parser
