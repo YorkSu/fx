@@ -28,9 +28,8 @@ class Shell(Parser):
         conf = config.root()
         self.hello = conf['shell']['hello']
 
-    def response(self, expression: str) -> Sequence[Response]:
-        expressions = and_parser.parse(expression)
-        responses = []
+    def parse(self, expressions: str) -> None:
+        expressions = and_parser.parse(expressions)
         for expression in expressions:
             command = command_parser.parse(expression)
             args, kwargs = argument_parser.parse(expression)
@@ -39,14 +38,8 @@ class Shell(Parser):
                      f"{command_parser.name(expression)}")
                 continue
             response = command.execute(*args, **kwargs)
-            responses.append(response)
-        return responses
-
-    def parse(self, expression: str) -> None:
-        responses = self.response(expression)
-        for response in responses:
-            if response.message:
-                print(response.message)
+            if response.code != 200:
+                print(f"{command} Got Code: {response.code}")
 
     def start(self):
         F.exit = False
