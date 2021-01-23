@@ -17,5 +17,6 @@ class HelloworldCommand(Command):
     def execute(self, *args, **kwargs) -> Response:
         response = Response()
         response.message = "Hello, World!"
+        print(response.message)
         return response
 
