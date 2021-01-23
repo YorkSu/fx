@@ -1,7 +1,6 @@
 # Custom
 .vscode
 trash/
-scripts/keepssh/conf.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
