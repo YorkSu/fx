@@ -57,6 +57,9 @@ class NowCommand(Command):
         for e in error:
             response.message += f'\n{e}'
 
+        if response.message:
+            print(response.message)
+
         return response
 
 
