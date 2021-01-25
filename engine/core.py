@@ -38,11 +38,16 @@ class Core(Parser):
                 continue
             command_class = CommandLoader.load(command)
             if command_class is None:
-                print(f"[Core] Invalid Command, '{command}'")
+                command_likes = CommandLoader.match(command)
+                if command_likes:
+                    for cl in command_likes:
+                        print(f"[Core] Invalid Command, maybe you meant '{cl}'")
+                else:
+                    print(f"[Core] Invalid Command, '{command}'")
                 continue
             response = command_class().execute(*args, **kwargs)
             if response.code != 200:
-                ...
+                ...  # log
             if not FLAGS.core_running:
                 break
 

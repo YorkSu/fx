@@ -6,7 +6,8 @@ Loader的实现类 - 命令加载类
 """
 
 
-from typing import Optional
+from difflib import SequenceMatcher
+from typing import Optional, Sequence
 
 from fx.engine.abcs import Command, Loader
 from fx.utils.config import ConfigLoader
@@ -88,6 +89,18 @@ class CommandLoader(Loader):
                     None
                 )
         return CommandLoader._members.get(command)
+
+    @staticmethod
+    def match(command) -> Sequence[str]:
+        settings = ConfigLoader.load_root()
+        threshold = settings['core']['like_threshold']
+        outputs = list()
+        for c in CommandLoader._commands:
+            matcher = SequenceMatcher(None, command, c)
+            ratio = matcher.quick_ratio()
+            if ratio >= threshold:
+                outputs.append(c)
+        return outputs
 
 
 CommandLoader._lazy_map()
